@@ -1,0 +1,1649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduProjify - Get Your Projects Built Without the Stress</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --primary-light: #818cf8;
+            --secondary: #0ea5e9;
+            --accent: #f472b6;
+            --dark: #0f172a;
+            --darker: #020617;
+            --light: #f8fafc;
+            --glass: rgba(255, 255, 255, 0.08);
+            --glass-border: rgba(255, 255, 255, 0.15);
+            --glass-strong: rgba(255, 255, 255, 0.12);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--darker);
+            color: var(--light);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--darker); }
+        ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 4px; }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .bg-gradient {
+            position: absolute;
+            width: 150%; height: 150%;
+            top: -25%; left: -25%;
+            background:
+                radial-gradient(ellipse at 20% 20%, rgba(99, 102, 241, 0.3) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(14, 165, 233, 0.2) 0%, transparent 50%),
+                radial-gradient(ellipse at 40% 60%, rgba(244, 114, 182, 0.15) 0%, transparent 40%);
+            animation: gradientMove 20s ease-in-out infinite;
+        }
+
+        @keyframes gradientMove {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(2%, 2%) rotate(1deg); }
+            66% { transform: translate(-2%, 1%) rotate(-1deg); }
+        }
+
+        /* Floating Particles */
+        .particles {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px; height: 4px;
+            background: var(--primary-light);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: float 15s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.3; }
+            90% { opacity: 0.3; }
+            100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; }
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 1000;
+            padding: 1rem 2rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .navbar.scrolled {
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.75rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary-light), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px; left: 0;
+            width: 0; height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover { color: #fff; }
+        .nav-links a:hover::after { width: 100%; }
+
+        .nav-cta {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: #fff;
+            padding: 0.75rem 1.75rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
+            border: none;
+            cursor: pointer;
+        }
+
+        .nav-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(99, 102, 241, 0.5);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .mobile-menu-btn span {
+            width: 25px; height: 2px;
+            background: #fff;
+            transition: all 0.3s ease;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8rem 2rem 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            text-align: center;
+            z-index: 1;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            padding: 0.5rem 1.25rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .hero-badge span {
+            width: 8px; height: 8px;
+            background: #22c55e;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            letter-spacing: -2px;
+        }
+
+        .hero h1 .gradient-text {
+            background: linear-gradient(135deg, var(--primary-light), var(--secondary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.1rem, 2vw, 1.35rem);
+            color: rgba(255, 255, 255, 0.65);
+            max-width: 600px;
+            margin: 0 auto 3rem;
+            line-height: 1.7;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: #fff;
+            padding: 1.1rem 2.5rem;
+            border-radius: 60px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 8px 40px rgba(99, 102, 241, 0.4);
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 16px 50px rgba(99, 102, 241, 0.5);
+        }
+
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            color: #fff;
+            padding: 1.1rem 2.5rem;
+            border-radius: 60px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(10px);
+            cursor: pointer;
+        }
+
+        .btn-secondary:hover {
+            background: var(--glass-strong);
+            transform: translateY(-4px);
+            border-color: var(--primary-light);
+        }
+
+        /* 3D Floating Cards */
+        .floating-elements {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            perspective: 1000px;
+        }
+
+        .float-card {
+            position: absolute;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            backdrop-filter: blur(20px);
+            padding: 1.25rem;
+            transform-style: preserve-3d;
+            animation: floatCard 8s ease-in-out infinite;
+        }
+
+        .float-card-1 { top: 15%; left: 5%; animation-delay: 0s; }
+        .float-card-2 { top: 25%; right: 8%; animation-delay: -2s; }
+        .float-card-3 { bottom: 20%; left: 8%; animation-delay: -4s; }
+        .float-card-4 { bottom: 25%; right: 5%; animation-delay: -6s; }
+
+        @keyframes floatCard {
+            0%, 100% { transform: translateY(0) rotateX(0) rotateY(0); }
+            25% { transform: translateY(-20px) rotateX(5deg) rotateY(-5deg); }
+            50% { transform: translateY(-10px) rotateX(-3deg) rotateY(3deg); }
+            75% { transform: translateY(-25px) rotateX(3deg) rotateY(-3deg); }
+        }
+
+        .float-card-icon {
+            width: 50px; height: 50px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .float-card-title { font-weight: 700; font-size: 0.9rem; margin-bottom: 0.25rem; }
+        .float-card-text { font-size: 0.75rem; color: rgba(255, 255, 255, 0.6); }
+
+        /* Stats Section */
+        .stats { padding: 4rem 2rem; position: relative; }
+
+        .stats-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 2rem;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            backdrop-filter: blur(20px);
+            transition: all 0.4s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--primary-light);
+            box-shadow: 0 20px 50px rgba(99, 102, 241, 0.2);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--primary-light), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label { color: rgba(255, 255, 255, 0.6); font-weight: 500; }
+
+        /* How It Works */
+        .how-it-works { padding: 8rem 2rem; position: relative; }
+
+        .section-header {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 5rem;
+        }
+
+        .section-tag {
+            display: inline-block;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(14, 165, 233, 0.2));
+            border: 1px solid var(--primary);
+            padding: 0.5rem 1.25rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--primary-light);
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
+            letter-spacing: -1px;
+        }
+
+        .section-subtitle { color: rgba(255, 255, 255, 0.6); font-size: 1.1rem; }
+
+        .steps-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .step-card {
+            position: relative;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 28px;
+            padding: 2.5rem;
+            backdrop-filter: blur(20px);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+        }
+
+        .step-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .step-card:hover {
+            transform: translateY(-12px) scale(1.02);
+            border-color: var(--primary);
+            box-shadow: 0 30px 60px rgba(99, 102, 241, 0.25);
+        }
+
+        .step-card:hover::before { opacity: 1; }
+
+        .step-number {
+            width: 60px; height: 60px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+        }
+
+        .step-title { font-size: 1.3rem; font-weight: 700; margin-bottom: 0.75rem; }
+        .step-text { color: rgba(255, 255, 255, 0.6); line-height: 1.7; }
+
+        /* Features */
+        .features { padding: 8rem 2rem; }
+
+        .features-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 28px;
+            padding: 2.5rem;
+            backdrop-filter: blur(20px);
+            transition: all 0.5s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary-light);
+            box-shadow: 0 30px 60px rgba(99, 102, 241, 0.2);
+        }
+
+        .feature-icon {
+            width: 70px; height: 70px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 15px 35px rgba(99, 102, 241, 0.3);
+        }
+
+        .feature-title { font-size: 1.4rem; font-weight: 700; margin-bottom: 0.75rem; }
+        .feature-text { color: rgba(255, 255, 255, 0.6); line-height: 1.7; }
+
+        /* Project Types */
+        .project-types { padding: 8rem 2rem; }
+
+        .types-grid {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .type-card {
+            background: linear-gradient(145deg, var(--glass-strong), var(--glass));
+            border: 1px solid var(--glass-border);
+            border-radius: 28px;
+            padding: 3rem 2rem;
+            text-align: center;
+            backdrop-filter: blur(20px);
+            transition: all 0.5s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .type-card:hover {
+            transform: translateY(-12px) rotateX(5deg);
+            box-shadow: 0 40px 80px rgba(99, 102, 241, 0.25);
+        }
+
+        .type-card.software { border-color: var(--primary-light); }
+        .type-card.hardware { border-color: var(--secondary); }
+        .type-icon { font-size: 4rem; margin-bottom: 1.5rem; }
+        .type-title { font-size: 1.75rem; font-weight: 800; margin-bottom: 1rem; }
+
+        .type-list { list-style: none; text-align: left; }
+
+        .type-list li {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.5rem 0;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .type-list li::before { content: '✓'; color: var(--primary-light); font-weight: 700; }
+
+        /* Testimonials */
+        .testimonials {
+            padding: 8rem 2rem;
+            background: linear-gradient(180deg, transparent, rgba(14, 165, 233, 0.05), transparent);
+        }
+
+        .testimonials-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .testimonial-card {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 2.5rem;
+            backdrop-filter: blur(20px);
+            transition: all 0.4s ease;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--primary-light);
+        }
+
+        .testimonial-stars { color: #fbbf24; font-size: 1.25rem; margin-bottom: 1rem; }
+        .testimonial-text { font-size: 1.1rem; line-height: 1.8; margin-bottom: 1.5rem; color: rgba(255, 255, 255, 0.85); }
+
+        .testimonial-author { display: flex; align-items: center; gap: 1rem; }
+
+        .testimonial-avatar {
+            width: 50px; height: 50px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.25rem;
+        }
+
+        .testimonial-name { font-weight: 700; }
+        .testimonial-role { font-size: 0.85rem; color: rgba(255, 255, 255, 0.5); }
+
+        /* CTA Section */
+        .cta-section { padding: 8rem 2rem; position: relative; }
+
+        .cta-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-radius: 32px;
+            padding: 4rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 40px 100px rgba(99, 102, 241, 0.4);
+        }
+
+        .cta-container::before {
+            content: '';
+            position: absolute;
+            top: -50%; right: -50%;
+            width: 100%; height: 100%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .cta-title { font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; margin-bottom: 1rem; }
+        .cta-text { font-size: 1.2rem; opacity: 0.9; margin-bottom: 2rem; max-width: 500px; margin-left: auto; margin-right: auto; }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: #fff;
+            color: var(--primary-dark);
+            padding: 1.25rem 3rem;
+            border-radius: 60px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.4s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Footer */
+        .footer {
+            padding: 4rem 2rem 2rem;
+            border-top: 1px solid var(--glass-border);
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-brand { max-width: 300px; }
+
+        .footer-logo {
+            font-size: 1.75rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary-light), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .footer-desc { color: rgba(255, 255, 255, 0.5); line-height: 1.7; }
+        .footer-title { font-weight: 700; margin-bottom: 1.25rem; font-size: 1rem; }
+        .footer-links { list-style: none; }
+        .footer-links li { margin-bottom: 0.75rem; }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.5);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover { color: var(--primary-light); }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid var(--glass-border);
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 0.9rem;
+        }
+
+        /* Modal Overlay */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem; right: 1rem;
+            width: 36px; height: 36px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #fff;
+            font-size: 1.25rem;
+        }
+
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: rotate(90deg);
+        }
+
+        /* Request Form Modal */
+        .request-modal {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 32px;
+            padding: 2rem;
+            max-width: 800px;
+            width: 95%;
+            max-height: 90vh;
+            position: relative;
+            transform: scale(0.9) translateY(30px);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(40px) saturate(180%);
+            -webkit-backdrop-filter: blur(40px) saturate(180%);
+            box-shadow:
+                0 25px 80px rgba(0, 0, 0, 0.5),
+                0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+            overflow: hidden;
+        }
+
+        .modal-overlay.active .request-modal {
+            transform: scale(1) translateY(0);
+        }
+
+        .request-header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .request-title { font-size: 1.5rem; font-weight: 800; margin-bottom: 0.5rem; }
+        .request-subtitle { color: rgba(255, 255, 255, 0.6); font-size: 0.9rem; }
+
+        .pricing-notice {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(14, 165, 233, 0.2));
+            border: 1px solid var(--primary);
+            border-radius: 16px;
+            padding: 1rem 1.5rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .pricing-notice-icon { font-size: 1.5rem; }
+        .pricing-notice-text { font-size: 0.9rem; color: rgba(255, 255, 255, 0.9); }
+
+        .form-container {
+            border-radius: 16px;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .form-container iframe {
+            width: 700px;
+            max-width: 100%;
+            height: 520px;
+            border: none;
+            display: block;
+            margin: 0 auto;
+        }
+
+        /* Success Modal */
+        .success-modal {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 32px;
+            padding: 3rem;
+            max-width: 450px;
+            width: 90%;
+            text-align: center;
+            position: relative;
+            transform: scale(0.9) translateY(30px);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(40px) saturate(180%);
+            -webkit-backdrop-filter: blur(40px) saturate(180%);
+            box-shadow:
+                0 25px 80px rgba(0, 0, 0, 0.5),
+                0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+        }
+
+        .modal-overlay.active .success-modal {
+            transform: scale(1) translateY(0);
+        }
+
+        .success-icon {
+            width: 100px; height: 100px;
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            margin: 0 auto 2rem;
+            box-shadow: 0 20px 50px rgba(34, 197, 94, 0.4);
+            animation: successPop 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        @keyframes successPop {
+            0% { transform: scale(0); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        .success-title { font-size: 2rem; font-weight: 800; margin-bottom: 1rem; }
+
+        .success-text {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+
+        .success-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: #fff;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1rem;
+            transition: all 0.4s ease;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4);
+        }
+
+        .success-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(99, 102, 241, 0.5);
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .mobile-menu-btn { display: flex; }
+            .hero { padding: 6rem 1.5rem 3rem; }
+            .floating-elements { display: none; }
+            .section-header { margin-bottom: 3rem; }
+
+            .how-it-works, .features, .project-types, .testimonials, .cta-section {
+                padding: 5rem 1.5rem;
+            }
+
+            .cta-container { padding: 3rem 2rem; }
+            .request-modal, .success-modal { margin: 1rem; padding: 2rem; }
+            .form-container iframe { height: 400px; }
+            .testimonials-grid { grid-template-columns: 1fr; }
+        }
+
+        /* Lerp Scroll */
+        .lerp-wrapper { position: fixed; top: 0; left: 0; width: 100%; will-change: transform; }
+        section { position: relative; z-index: 1; }
+
+        .parallax-bg {
+            position: absolute;
+            width: 100%; height: 100%;
+            top: 0; left: 0;
+            z-index: -1;
+            will-change: transform;
+        }
+
+        /* 3D Tilt */
+        .tilt-card { transform-style: preserve-3d; perspective: 1000px; }
+        .tilt-card-inner { transition: transform 0.1s ease-out; transform-style: preserve-3d; }
+
+        /* Cursor Glow */
+        .cursor-glow {
+            position: fixed;
+            width: 300px; height: 300px;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        body:hover .cursor-glow { opacity: 1; }
+
+        /* Mobile Menu */
+        .mobile-nav {
+            position: fixed;
+            top: 0; right: -100%;
+            width: 80%; max-width: 350px;
+            height: 100vh;
+            background: rgba(15, 23, 42, 0.98);
+            backdrop-filter: blur(20px);
+            z-index: 9999;
+            padding: 5rem 2rem 2rem;
+            transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border-left: 1px solid var(--glass-border);
+        }
+
+        .mobile-nav.active { right: 0; }
+
+        .mobile-nav-close {
+            position: absolute;
+            top: 1.5rem; right: 1.5rem;
+            width: 40px; height: 40px;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: #fff;
+            font-size: 1.25rem;
+        }
+
+        .mobile-nav-links {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .mobile-nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.25rem;
+            font-weight: 600;
+            display: block;
+            padding: 0.5rem 0;
+        }
+
+        .mobile-nav-cta { margin-top: 2rem; }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="bg-animation">
+        <div class="bg-gradient"></div>
+    </div>
+
+    <!-- Floating Particles -->
+    <div class="particles" id="particles"></div>
+
+    <!-- Cursor Glow Effect -->
+    <div class="cursor-glow" id="cursorGlow"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="logo">EduProjify</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#how-it-works">How It Works</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#testimonials">Reviews</a></li>
+            </ul>
+            <button class="nav-cta" id="navRequestBtn">Request Project</button>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav" id="mobileNav">
+        <button class="mobile-nav-close" id="mobileNavClose">✕</button>
+        <ul class="mobile-nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#how-it-works">How It Works</a></li>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#testimonials">Reviews</a></li>
+        </ul>
+        <div class="mobile-nav-cta">
+            <button class="btn-primary" id="mobileRequestBtn">Request Project</button>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="floating-elements">
+            <div class="float-card float-card-1">
+                <div class="float-card-icon">💻</div>
+                <div class="float-card-title">Web Apps</div>
+                <div class="float-card-text">Custom solutions</div>
+            </div>
+            <div class="float-card float-card-2">
+                <div class="float-card-icon">🔧</div>
+                <div class="float-card-title">Hardware</div>
+                <div class="float-card-text">IoT & Electronics</div>
+            </div>
+            <div class="float-card float-card-3">
+                <div class="float-card-icon">📱</div>
+                <div class="float-card-title">Mobile Apps</div>
+                <div class="float-card-text">iOS & Android</div>
+            </div>
+            <div class="float-card float-card-4">
+                <div class="float-card-icon">🤖</div>
+                <div class="float-card-title">AI/ML</div>
+                <div class="float-card-text">Smart solutions</div>
+            </div>
+        </div>
+
+        <div class="hero-content">
+            <div class="hero-badge">
+                <span></span>
+                Now Accepting Requests
+            </div>
+            <h1>Get Your Projects Built<br><span class="gradient-text">Without the Stress</span></h1>
+            <p class="hero-subtitle">Submit your requirement. We handle everything — from planning to execution to delivery. Focus on your studies while we build your vision.</p>
+            <div class="hero-buttons">
+                <button class="btn-primary" id="heroRequestBtn">
+                    <span>🚀</span> Request a Project
+                </button>
+                <a href="#how-it-works" class="btn-secondary">
+                    <span>📖</span> Learn More
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="stats-container">
+            <div class="stat-card">
+                <div class="stat-number">500+</div>
+                <div class="stat-label">Projects Completed</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">98%</div>
+                <div class="stat-label">Success Rate</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">24h</div>
+                <div class="stat-label">Avg. Response Time</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">4.9★</div>
+                <div class="stat-label">Student Rating</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-it-works" id="how-it-works">
+        <div class="section-header">
+            <div class="section-tag">Simple Process</div>
+            <h2 class="section-title">How It Works</h2>
+            <p class="section-subtitle">Four simple steps to get your project done professionally</p>
+        </div>
+
+        <div class="steps-container">
+            <div class="step-card tilt-card">
+                <div class="tilt-card-inner">
+                    <div class="step-number">1</div>
+                    <h3 class="step-title">Submit Request</h3>
+                    <p class="step-text">Fill out our simple form with your project details, requirements, and deadline. No budget required — we'll evaluate and quote.</p>
+                </div>
+            </div>
+            <div class="step-card tilt-card">
+                <div class="tilt-card-inner">
+                    <div class="step-number">2</div>
+                    <h3 class="step-title">Get Evaluation</h3>
+                    <p class="step-text">Our team reviews your request and provides a fair price quote based on complexity, timeline, and resources needed.</p>
+                </div>
+            </div>
+            <div class="step-card tilt-card">
+                <div class="tilt-card-inner">
+                    <div class="step-number">3</div>
+                    <h3 class="step-title">Confirm & Relax</h3>
+                    <p class="step-text">Once you approve the quote, we assign expert creators and begin work immediately. You get regular updates throughout.</p>
+                </div>
+            </div>
+            <div class="step-card tilt-card">
+                <div class="tilt-card-inner">
+                    <div class="step-number">4</div>
+                    <h3 class="step-title">Receive Delivery</h3>
+                    <p class="step-text">Get your completed project with documentation, testing, and support. Hardware projects are securely packaged and shipped.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="section-header">
+            <div class="section-tag">Why Choose Us</div>
+            <h2 class="section-title">Built for Students</h2>
+            <p class="section-subtitle">Everything you need to succeed in your academic projects</p>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-card tilt-card">
+                <div class="tilt-card-inner">
+                    <div class="feature-icon">🛡️</div>
+                    <h3 class="feature-title">Admin-Controlled Quality</h3>
+                    <p class="feature-text">Every project is vetted, assigned, and monitored by our admin team to ensure highest quality delivery.</p>
+                </div>
+            </div>
+            <div class="feature-card tilt-card">
+                <div class="tilt-card-inner">
+                    <div class="feature-icon">💰</div>
+                    <h3 class="feature-title">Fair Pricing</h3>
+                    <p class="feature-text">No upfront budget decisions. We evaluate your project and provide transparent, student-friendly pricing.</p>
+                </div>
+            </div>
+            <div class="feature-card tilt-card">
+                <div class="tilt-card-inner">
+                    <div class="feature-icon">⚡</div>
+                    <h3 class="feature-title">Fast Turnaround</h3>
+                    <p class="feature-text">Meet your deadlines with our efficient workflow. Urgent delivery options available for time-sensitive projects.</p>
+                </div>
+            </div>
+            <div class="feature-card tilt-card">
+                <div class="tilt-card-inner">
+                    <div class="feature-icon">📚</div>
+                    <h3 class="feature-title">Full Documentation</h3>
+                    <p class="feature-text">Every project comes with comprehensive documentation to help you understand and present your work.</p>
+                </div>
+            </div>
+            <div class="feature-card tilt-card">
+                <div class="tilt-card-inner">
+                    <div class="feature-icon">🔒</div>
+                    <h3 class="feature-title">Confidential & Secure</h3>
+                    <p class="feature-text">Your project details and personal information are kept strictly confidential throughout the process.</p>
+                </div>
+            </div>
+            <div class="feature-card tilt-card">
+                <div class="tilt-card-inner">
+                    <div class="feature-icon">🎯</div>
+                    <h3 class="feature-title">Revision Support</h3>
+                    <p class="feature-text">Not satisfied? We offer revision rounds to ensure your project meets all your requirements perfectly.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Project Types -->
+    <section class="project-types" id="projects">
+        <div class="section-header">
+            <div class="section-tag">What We Build</div>
+            <h2 class="section-title">Project Types</h2>
+            <p class="section-subtitle">From software applications to hardware prototypes</p>
+        </div>
+
+        <div class="types-grid">
+            <div class="type-card software tilt-card">
+                <div class="tilt-card-inner">
+                    <div class="type-icon">💻</div>
+                    <h3 class="type-title">Software Projects</h3>
+                    <ul class="type-list">
+                        <li>Web Applications</li>
+                        <li>Mobile Apps (iOS/Android)</li>
+                        <li>Desktop Applications</li>
+                        <li>Machine Learning & AI</li>
+                        <li>Database Systems</li>
+                        <li>API Development</li>
+                        <li>Game Development</li>
+                        <li>Blockchain & Web3</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="type-card hardware tilt-card">
+                <div class="tilt-card-inner">
+                    <div class="type-icon">🔧</div>
+                    <h3 class="type-title">Hardware Projects</h3>
+                    <ul class="type-list">
+                        <li>Arduino & Raspberry Pi</li>
+                        <li>IoT Solutions</li>
+                        <li>Robotics & Automation</li>
+                        <li>Embedded Systems</li>
+                        <li>PCB Design</li>
+                        <li>Sensor Integration</li>
+                        <li>3D Printed Components</li>
+                        <li>Smart Home Devices</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials" id="testimonials">
+        <div class="section-header">
+            <div class="section-tag">Student Reviews</div>
+            <h2 class="section-title">What Students Say</h2>
+            <p class="section-subtitle">Real feedback from students who trusted us</p>
+        </div>
+
+        <div class="testimonials-grid">
+            <div class="testimonial-card">
+                <div class="testimonial-stars">★★★★★</div>
+                <p class="testimonial-text">"EduProjify saved my semester! I submitted my IoT project requirements and got a fully working prototype delivered before my deadline. The documentation was so thorough."</p>
+                <div class="testimonial-author">
+                    <div class="testimonial-avatar">RA</div>
+                    <div>
+                        <div class="testimonial-name">Rahul A.</div>
+                        <div class="testimonial-role">B.Tech, Electronics</div>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <div class="testimonial-stars">★★★★★</div>
+                <p class="testimonial-text">"The pricing was transparent and fair. I loved that I didn't have to negotiate — they evaluated my ML project and gave me a reasonable quote. Excellent quality!"</p>
+                <div class="testimonial-author">
+                    <div class="testimonial-avatar">PS</div>
+                    <div>
+                        <div class="testimonial-name">Priya S.</div>
+                        <div class="testimonial-role">M.Sc, Data Science</div>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <div class="testimonial-stars">★★★★★</div>
+                <p class="testimonial-text">"My hardware project needed specific components that were hard to find. The team sourced everything, built it, and even helped me with the presentation. Amazing service!"</p>
+                <div class="testimonial-author">
+                    <div class="testimonial-avatar">VK</div>
+                    <div>
+                        <div class="testimonial-name">Vikram K.</div>
+                        <div class="testimonial-role">B.E, Mechanical</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="cta-container">
+            <h2 class="cta-title">Ready to Start Your Project?</h2>
+            <p class="cta-text">Join hundreds of students who got their projects built stress-free. Submit your request today!</p>
+            <button class="cta-button" id="ctaRequestBtn">
+                🚀 Request a Project Now
+            </button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-brand">
+                <div class="footer-logo">EduProjify</div>
+                <p class="footer-desc">Your trusted partner for academic project development. We handle software and hardware projects with professional quality and timely delivery.</p>
+            </div>
+            <div>
+                <h4 class="footer-title">Quick Links</h4>
+                <ul class="footer-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#how-it-works">How It Works</a></li>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="footer-title">Services</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Software Development</a></li>
+                    <li><a href="#">Hardware Projects</a></li>
+                    <li><a href="#">IoT Solutions</a></li>
+                    <li><a href="#">AI/ML Projects</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="footer-title">Support</h4>
+                <ul class="footer-links">
+                    <li><a href="#">FAQs</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 EduProjify. All rights reserved. Built with ❤️ for students.</p>
+        </div>
+    </footer>
+
+    <!-- Request Form Modal -->
+    <div class="modal-overlay" id="requestModal">
+        <div class="request-modal">
+            <button class="modal-close" id="requestClose">✕</button>
+            <div class="request-header">
+                <h2 class="request-title">Submit Your Project Request</h2>
+                <p class="request-subtitle">Tell us about your project and we'll get back to you</p>
+            </div>
+            <div class="pricing-notice">
+                <span class="pricing-notice-icon">💡</span>
+                <span class="pricing-notice-text"><strong>No budget needed!</strong> Pricing will be provided after reviewing your request.</span>
+            </div>
+            <div class="form-container">
+                <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfFkEErS69d5vPNIs71Z8Vz9GwlD_eXyOFAOrR7wboq7LzwMg/viewform?embedded=true" width="700" height="520" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="modal-overlay" id="successModal">
+        <div class="success-modal">
+            <button class="modal-close" id="successClose">✕</button>
+            <div class="success-icon">✓</div>
+            <h2 class="success-title">Request Sent! 🎉</h2>
+            <p class="success-text">Thank you for submitting your project request. Our team will review it and contact you within 24 hours with pricing and next steps.</p>
+            <button class="success-btn" id="successBtn">🏠 Back to Home</button>
+        </div>
+    </div>
+
+    <script>
+        // ===== LERP SMOOTH SCROLL EFFECT =====
+        class LerpScroll {
+            constructor() {
+                this.currentScroll = 0;
+                this.targetScroll = 0;
+                this.ease = 0.08;
+                this.init();
+            }
+
+            init() {
+                window.addEventListener('scroll', () => {
+                    this.targetScroll = window.scrollY;
+                });
+                this.animate();
+            }
+
+            lerp(start, end, factor) {
+                return start + (end - start) * factor;
+            }
+
+            animate() {
+                this.currentScroll = this.lerp(this.currentScroll, this.targetScroll, this.ease);
+
+                const floatCards = document.querySelectorAll('.float-card');
+                floatCards.forEach((card, index) => {
+                    const speed = 0.1 + (index * 0.05);
+                    card.style.transform = `translateY(${this.currentScroll * speed}px) rotateX(${Math.sin(this.currentScroll * 0.01) * 5}deg)`;
+                });
+
+                document.querySelectorAll('.stat-card').forEach((card, index) => {
+                    const rect = card.getBoundingClientRect();
+                    if (rect.top < window.innerHeight && rect.bottom > 0) {
+                        const progress = (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
+                        card.style.transform = `translateY(${(1 - progress) * 20}px)`;
+                    }
+                });
+
+                requestAnimationFrame(() => this.animate());
+            }
+        }
+
+        // ===== CURSOR GLOW EFFECT =====
+        const cursorGlow = document.getElementById('cursorGlow');
+        let mouseX = 0, mouseY = 0;
+        let glowX = 0, glowY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+
+        function animateCursor() {
+            glowX += (mouseX - glowX) * 0.1;
+            glowY += (mouseY - glowY) * 0.1;
+            cursorGlow.style.left = glowX + 'px';
+            cursorGlow.style.top = glowY + 'px';
+            requestAnimationFrame(animateCursor);
+        }
+        animateCursor();
+
+        // ===== GENERATE PARTICLES =====
+        const particlesContainer = document.getElementById('particles');
+        for (let i = 0; i < 30; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 15 + 's';
+            particle.style.animationDuration = (15 + Math.random() * 10) + 's';
+            particlesContainer.appendChild(particle);
+        }
+
+        // ===== NAVBAR SCROLL EFFECT =====
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // ===== 3D TILT EFFECT ON CARDS =====
+        document.querySelectorAll('.tilt-card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                const rotateX = (y - centerY) / 10;
+                const rotateY = (centerX - x) / 10;
+
+                const inner = card.querySelector('.tilt-card-inner');
+                if (inner) {
+                    inner.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+                }
+            });
+
+            card.addEventListener('mouseleave', () => {
+                const inner = card.querySelector('.tilt-card-inner');
+                if (inner) {
+                    inner.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
+                }
+            });
+        });
+
+        // ===== MODAL HANDLING =====
+        const requestModal = document.getElementById('requestModal');
+        const successModal = document.getElementById('successModal');
+
+        function openRequestModal() {
+            requestModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeRequestModal() {
+            requestModal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function openSuccessModal() {
+            successModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeSuccessModal() {
+            successModal.classList.remove('active');
+            document.body.style.overflow = '';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Request buttons — open form directly (no login)
+        const requestButtons = [
+            document.getElementById('heroRequestBtn'),
+            document.getElementById('navRequestBtn'),
+            document.getElementById('ctaRequestBtn'),
+            document.getElementById('mobileRequestBtn')
+        ];
+
+        requestButtons.forEach(btn => {
+            if (btn) {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    closeMobileNav();
+                    openRequestModal();
+                });
+            }
+        });
+
+        // Close request modal (X button)
+        document.getElementById('requestClose').addEventListener('click', closeRequestModal);
+
+        // Close success modal (X button) → goes to home
+        document.getElementById('successClose').addEventListener('click', closeSuccessModal);
+
+        // Success modal "Back to Home" button
+        document.getElementById('successBtn').addEventListener('click', closeSuccessModal);
+
+        // Close modals on outside click
+        [requestModal, successModal].forEach(modal => {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.classList.remove('active');
+                    document.body.style.overflow = '';
+                    if (modal === successModal) {
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }
+                }
+            });
+        });
+
+        // ===== DETECT GOOGLE FORM SUBMISSION =====
+        // Method 1: postMessage from Google Forms
+        window.addEventListener('message', function(event) {
+            if (event.origin && event.origin.includes('google.com')) {
+                closeRequestModal();
+                setTimeout(openSuccessModal, 300);
+            }
+        });
+
+        // Method 2: iframe second load = form submitted
+        const formIframe = document.querySelector('.form-container iframe');
+        let formLoaded = false;
+
+        if (formIframe) {
+            formIframe.addEventListener('load', function() {
+                if (formLoaded) {
+                    closeRequestModal();
+                    setTimeout(openSuccessModal, 300);
+                }
+                formLoaded = true;
+            });
+        }
+
+        // ===== MOBILE MENU =====
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileNav = document.getElementById('mobileNav');
+        const mobileNavClose = document.getElementById('mobileNavClose');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileNav.classList.add('active');
+        });
+
+        function closeMobileNav() {
+            mobileNav.classList.remove('active');
+        }
+
+        mobileNavClose.addEventListener('click', closeMobileNav);
+
+        document.querySelectorAll('.mobile-nav-links a').forEach(link => {
+            link.addEventListener('click', closeMobileNav);
+        });
+
+        // ===== SMOOTH SCROLL FOR ANCHOR LINKS =====
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const headerOffset = 80;
+                    const elementPosition = target.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                    window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+                }
+            });
+        });
+
+        // ===== INTERSECTION OBSERVER FOR ANIMATIONS =====
+        const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.step-card, .feature-card, .type-card, .testimonial-card, .stat-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+            observer.observe(el);
+        });
+
+        // ===== INITIALIZE LERP SCROLL =====
+        new LerpScroll();
+
+        // ===== STATS COUNTER ANIMATION =====
+        function animateCounter(element, target, duration = 2000) {
+            const increment = target / (duration / 16);
+            let current = 0;
+
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    element.textContent = target + (element.dataset.suffix || '');
+                    clearInterval(timer);
+                } else {
+                    element.textContent = Math.floor(current) + (element.dataset.suffix || '');
+                }
+            }, 16);
+        }
+
+        const statsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const statNumbers = entry.target.querySelectorAll('.stat-number');
+                    statNumbers.forEach(stat => {
+                        const text = stat.textContent;
+                        if (text.includes('+')) {
+                            stat.dataset.suffix = '+';
+                            animateCounter(stat, parseInt(text));
+                        } else if (text.includes('%')) {
+                            stat.dataset.suffix = '%';
+                            animateCounter(stat, parseInt(text));
+                        } else if (text.includes('h')) {
+                            stat.dataset.suffix = 'h';
+                            animateCounter(stat, parseInt(text));
+                        }
+                    });
+                    statsObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        const statsSection = document.querySelector('.stats');
+        if (statsSection) statsObserver.observe(statsSection);
+    </script>
+</body>
+</html>
